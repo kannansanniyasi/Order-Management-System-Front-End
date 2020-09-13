@@ -1,0 +1,76 @@
+<app-header></app-header>
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <h4 style="text-align: center;">{{title}}</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <h5 class="card-header"><label>Add Order</label> </h5>
+            <div class="card-body">
+                <div *ngIf="null!=successMsg && successMsg!=''">
+                    <span class="success">{{successMsg}}</span>
+                </div>
+                <div *ngIf="null!=errorMsg && errorMsg!=''">
+                    <span class="error">{{errorMsg}}</span>
+                </div>
+                <form name="orderForm" [formGroup]="orderForm" (ngSubmit)="addOrder(orderForm.value)">
+                    <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4">
+                        <div class="form-group">
+                            <label class="labelCss" for="customerName">Customer Name:</label>
+                            <input type="text" class="form-control" maxlength="50" formControlName="customerName" id="customerName"
+                                placeholder="Enter Customer Name">
+                            <div class="error" *ngIf="orderForm.controls['customerName'].hasError('required')
+                                                                && orderForm.controls['customerName'].touched">Please enter
+                                the Customer Name</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelCss" for="orderDate">Order Date:</label>
+                            <input type="date" class="form-control" maxlength="15"
+                                formControlName="orderDate" id="orderDate">
+                            <div class="error" *ngIf="orderForm.controls['orderDate'].hasError('required')
+                                            && orderForm.controls['orderDate'].touched">Please enter
+                                the Order Date</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="labelCss" for="shippingAddress">Shipping Address:</label>
+                            <textarea class="form-control" formControlName="shippingAddress" maxlength="200"
+                                id="shippingAddress" placeholder="Enter Shipping Address">
+                                    </textarea>
+                            <div class="error" *ngIf="orderForm.controls['shippingAddress'].hasError('required')
+                                            && orderForm.controls['shippingAddress'].touched">Please
+                                enter the Shipping Address</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="labelCss" for="productName">Product Name :</label>
+                            <select class="form-control" formControlName="productName" id="productName">
+                                <option value="">Please Select</option>
+                                <option *ngFor="let product of productList"
+                                    value="{{product.productId+','+product.productName+','+product.quantity+','+product.price}}">{{product.productName}}</option>
+                            </select>
+                            <div class="error" *ngIf="orderForm.controls['productName'].hasError('required')
+                                            && orderForm.controls['productName'].touched">Please Select
+                                Product</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="labelCss" for="counts">No of Counts :</label>
+                            <input type="text" class="form-control" maxlength="15"
+                                formControlName="counts" id="counts">
+                            <div class="error" *ngIf="orderForm.controls['counts'].hasError('required')
+                                            && orderForm.controls['counts'].touched">Please enter
+                                the No Of Counts</div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" name="submit" [disabled]="orderForm.invalid"
+                                class="btn btn-primary" value="Registeration" />
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
